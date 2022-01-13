@@ -44,12 +44,21 @@ ORDER BY `degrees`.`id`;
 
 6)
 
-SELECT `teachers`.*, `departments`.`name` 
+SELECT DISTINCT `teachers`.*, `departments`.`name` 
 FROM `teachers` 
 JOIN `course_teacher` ON `teachers`.`id` = `course_teacher`.`teacher_id` 
 JOIN `courses`ON `course_teacher`.`course_id` = `courses`.`id` 
 JOIN `degrees` ON `courses`.`degree_id` = `degrees`.`id` 
 JOIN `departments` ON `degrees`.`department_id` = `departments`.`id` 
 WHERE `departments`.`name` = 'Dipartimento di Matematica' 
-ORDER BY `teachers`.`surname`, `teachers`.`name` ASC;
+ORDER BY `teachers`.`id` ASC;
 
+7)
+
+SELECT `students`.* , COUNT(`exams`.`id`) AS `tries`, `courses`.`name` AS `couse` 
+FROM `students` 
+JOIN `exam_student` ON `students`.`id` = `exam_student`.`student_id` 
+JOIN `exams` ON `exam_student`.`exam_id` = `exams`.`id` 
+JOIN `courses` ON `exams`.`course_id` = `courses`.`id` 
+GROUP BY `students`.`id`, `exams`.`course_id` 
+ORDER BY `students`.`id`;
